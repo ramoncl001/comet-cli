@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"io/fs"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -21,18 +22,47 @@ func extractEmbeddedFiles() error {
 			return err
 		}
 
-		if !d.IsDir() {
-			data, err := embeddedFiles.ReadFile(path)
+		if d.IsDir() {
+			if _, err := os.Stat(path); os.IsNotExist(err) {
+				if err := os.MkdirAll(path, 0755); err != nil {
+					return fmt.Errorf("error creating directory %s: %w", path, err)
+				}
+			}
+			return nil
+		}
+
+		if _, err := os.Stat(path); err == nil {
+			existingData, err := os.ReadFile(path)
 			if err != nil {
-				return err
+				return fmt.Errorf("error reading existing file %s: %w", path, err)
 			}
 
-			// Crear directorios necesarios
-			os.MkdirAll(filepath.Dir(path), 0755)
+			embeddedData, err := embeddedFiles.ReadFile(path)
+			if err != nil {
+				return fmt.Errorf("error reading embedded file %s: %w", path, err)
+			}
 
-			// Escribir archivo
-			return os.WriteFile(path, data, 0644)
+			if string(existingData) == string(embeddedData) {
+				return nil
+			}
+
+			log.Printf("File exists but is different: %s", path)
 		}
+
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			return fmt.Errorf("error creating parent directories for %s: %w", path, err)
+		}
+
+		data, err := embeddedFiles.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("error reading embedded file %s: %w", path, err)
+		}
+
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			return fmt.Errorf("error writing file %s: %w", path, err)
+		}
+
+		log.Printf("Extracted file: %s", path)
 		return nil
 	})
 }

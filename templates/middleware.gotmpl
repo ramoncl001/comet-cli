@@ -1,12 +1,11 @@
 package {{.Package}}
 
 import (
-    "github.com/ramoncl001/comet/middleware"
-    "github.com/ramoncl001/comet/rest"
+    "github.com/ramoncl001/comet
 )
 
-var {{.Name}}Middleware = func (next rest.RequestHandler) rest.RequestHandler {
-    return func(req *rest.Request) rest.Response {
+var {{.Name}}Middleware = func (next comet.RequestHandler) comet.RequestHandler {
+    return func(req *comet.Request) comet.Response {
         //Content
         return next(req)
     }

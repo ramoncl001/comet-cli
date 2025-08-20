@@ -1,11 +1,11 @@
 package {{.Package}}
 
 import (
-    "github.com/ramoncl001/comet/rest"
+    "github.com/ramoncl001/comet"
 )
 
 type {{.Name}}Controller struct {
-    rest.ControllerBase
+    comet.ControllerBase
 }
 
 func New{{.Name}}Controller() {{.Name}}Controller {
@@ -16,6 +16,6 @@ func ({{.Name}}Controller) Path() string {
     return ""
 }
 
-func ({{.Name}}Controller) Policies() rest.PoliciesConfig {
-    return rest.PoliciesConfig{}
+func ({{.Name}}Controller) Policies() comet.PoliciesConfig {
+    return comet.PoliciesConfig{}
 }

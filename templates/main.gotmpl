@@ -1,19 +1,17 @@
 package main
 
 import (
-    "github.com/ramoncl001/comet/ioc"
-    "github.com/ramoncl001/comet/api"
-    "github.com/ramoncl001/comet/middleware"
+    "github.com/ramoncl001/comet
     "{{.Module}}/controllers"
     "{{.Module}}/services"
 )
 
 func main() {
-    app := api.CreateServer()
+    app := comet.CreateServer()
 
     app.UseMiddleware(middleware.RequestLogging)
 
-    ioc.RegisterTransient[services.FooService](services.NewFooService)
+    comet.RegisterTransient[services.FooService](services.NewFooService)
 
     app.MapController(controllers.NewFooController)
 
