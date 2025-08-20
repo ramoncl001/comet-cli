@@ -1,13 +1,41 @@
 package main
 
 import (
+	"embed"
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/ramoncl001/comet-cli/generator"
 	"github.com/spf13/cobra"
 )
+
+//go:embed templates/*.gotmpl
+var embeddedFiles embed.FS
+
+func extractEmbeddedFiles() error {
+	return fs.WalkDir(embeddedFiles, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !d.IsDir() {
+			data, err := embeddedFiles.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			// Crear directorios necesarios
+			os.MkdirAll(filepath.Dir(path), 0755)
+
+			// Escribir archivo
+			return os.WriteFile(path, data, 0644)
+		}
+		return nil
+	})
+}
 
 func main() {
 	var rootCmd = &cobra.Command{
@@ -20,6 +48,8 @@ func main() {
 		Short: "Creates a new comet project with selected name",
 		Args:  cobra.ExactArgs(2),
 		Run: func(cmd *cobra.Command, args []string) {
+			extractEmbeddedFiles()
+
 			projectName := args[0]
 			module := args[1]
 			err := generator.CreateProject(projectName, module)
@@ -36,6 +66,8 @@ func main() {
 		Short: "Creates a <type - (controller, service, middleware)> with <name> in the selected <location>",
 		Args:  cobra.ExactArgs(3),
 		Run: func(cmd *cobra.Command, args []string) {
+			extractEmbeddedFiles()
+
 			component := args[0]
 			name := args[1]
 

@@ -28,26 +28,26 @@ sudo mv comet /usr/local/bin/
 ## 🚀 Quickstart
 ```bash
 # Create a new Comet project
-comet new my-project module.name
+comet-cli new my-project module.name
 
 # Navigate to your project
 cd my-project
 
 # Add a controller
-comet add controller User controllers
+comet-cli add controller User controllers
 
 # Add a service
-comet add service User services
+comet-cli add service User services
 
 # Add middleware
-comet add middleware Auth middlewares
+comet-cli add middleware Auth middlewares
 
 # Run your project
-comet run
+comet-cli run
 ```
 
 ## 📋 Commands
-`comet new [project-name] [module-name]`
+`comet-cli new [project-name] [module-name]`
 
 Creates a new Comet project with the specified name and Go module path.
 
@@ -57,10 +57,10 @@ Creates a new Comet project with the specified name and Go module path.
 
 #### Example:
 ```bash
-comet new awesome-api github.com/yourusername/awesome-api
+comet-cli new awesome-api github.com/yourusername/awesome-api
 ```
 
-`comet add [type] [name] [location]`
+`comet-cli add [type] [name] [location]`
 
 Generates new components for your Comet project.
 
@@ -72,30 +72,30 @@ Generates new components for your Comet project.
 #### Examples:
 ```bash
 # Create a controller in the controllers directory
-comet add controller User controllers
+comet-cli add controller User controllers
 
 # Create a service in the services directory
-comet add service User services
+comet-cli add service User services
 
 # Create middleware in the middleware directory
-comet add middleware Auth middlewares
+comet-cli add middleware Auth middlewares
 
 # Create component in current directory
-comet add controller Health .
+comet-cli add controller Health .
 ```
 
-`comet run`
+`comet-cli run`
 
 Executes your Comet project using `go run .`
 
 #### Example
 
 ```bash
-comet run
+comet-cli run
 ```
 
 ## 📁 Project Structure
-When you create a new project with `comet new`, it generates the following structure:
+When you create a new project with `comet-cli new`, it generates the following structure:
 
 ```text
 your-project/
@@ -164,7 +164,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 #### 2. Permission denied
 ```bash
 # On Unix systems, you might need to make the binary executable
-chmod +x $(go env GOPATH)/bin/comet
+chmod +x $(go env GOPATH)/bin/comet-cli
 ```
 
 #### 3. Dependency errors

@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	mainTemplate       = "templates/main.go.tmpl"
-	controllerTemplate = "templates/controller.go.tmpl"
-	serviceTemplate    = "templates/service.go.tmpl"
-	middlewareTemplate = "templates/middleware.go.tmpl"
+	mainTemplate       = "templates/main.gotmpl"
+	controllerTemplate = "templates/controller.gotmpl"
+	serviceTemplate    = "templates/service.gotmpl"
+	middlewareTemplate = "templates/middleware.gotmpl"
 )
 
 type Component string
