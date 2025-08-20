@@ -32,8 +32,11 @@ func CreateProject(projectName, module string) error {
 	}
 
 	dirs := []string{
-		filepath.Join(projectName, "controllers"),
-		filepath.Join(projectName, "services"),
+		filepath.Join(projectName, "middlewares"),
+		filepath.Join(projectName, "infrastructure"),
+		filepath.Join(projectName, "modules", "foo", "domain"),
+		filepath.Join(projectName, "modules", "foo", "services"),
+		filepath.Join(projectName, "modules", "foo", "controllers"),
 	}
 
 	for _, dir := range dirs {
@@ -61,15 +64,25 @@ func CreateProject(projectName, module string) error {
 		LowerName: "defaultFoo",
 	}
 
+	fooMiddleware := MiddlewareData{
+		Package:  "middlewares",
+		Name:     "Foo",
+		FileName: "foo_middleware.go",
+	}
+
 	if err := processTemplate(mainTemplate, filepath.Join(projectName, mainData.FileName), mainData); err != nil {
 		return err
 	}
 
-	if err := processTemplate(controllerTemplate, filepath.Join(projectName, "controllers", fooController.FileName), fooController); err != nil {
+	if err := processTemplate(middlewareTemplate, filepath.Join(projectName, "middlewares", fooMiddleware.FileName), fooMiddleware); err != nil {
 		return err
 	}
 
-	if err := processTemplate(serviceTemplate, filepath.Join(projectName, "services", fooService.FileName), fooService); err != nil {
+	if err := processTemplate(serviceTemplate, filepath.Join(projectName, "modules", "foo", "services", fooService.FileName), fooService); err != nil {
+		return err
+	}
+
+	if err := processTemplate(controllerTemplate, filepath.Join(projectName, "modules", "foo", "controllers", fooController.FileName), fooController); err != nil {
 		return err
 	}
 

@@ -1,15 +1,15 @@
 package main
 
 import (
-    "github.com/ramoncl001/comet
-    "{{.Module}}/controllers"
-    "{{.Module}}/services"
+    "github.com/ramoncl001/go-comet/comet"
+    "{{.Module}}/modules/foo/controllers"
+    "{{.Module}}/modules/foo/services"
 )
 
 func main() {
-    app := comet.CreateServer()
+    app := comet.NewServer()
 
-    app.UseMiddleware(middleware.RequestLogging)
+    app.UseMiddleware(comet.RequestLogging)
 
     comet.RegisterTransient[services.FooService](services.NewFooService)
 

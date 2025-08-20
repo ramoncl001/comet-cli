@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"fmt"
 	"io/fs"
@@ -8,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"time"
 
 	"github.com/ramoncl001/comet-cli/generator"
 	"github.com/spf13/cobra"
@@ -77,7 +79,7 @@ func main() {
 		Use:   "new [project-name] [module-name]",
 		Short: "Creates a new comet project with selected name",
 		Args:  cobra.ExactArgs(2),
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, args []string) {
 			extractEmbeddedFiles()
 
 			projectName := args[0]
@@ -87,6 +89,23 @@ func main() {
 				fmt.Printf("Error creating project: %v\n", err)
 				os.Exit(1)
 			}
+
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			defer cancel()
+
+			cmd := exec.CommandContext(ctx, "go", "get", "-u", "github.com/ramoncl001/go-comet/comet@latest")
+			cmd.Dir = projectName
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+
+			fmt.Println("🚀 Installing comet library...")
+			if err := cmd.Run(); err != nil {
+				fmt.Printf("failed to install comet: %v\n", err)
+				return
+			}
+
+			fmt.Println("✅ Comet library installed successfully!")
+
 			fmt.Println("Project created successfully!")
 		},
 	}
