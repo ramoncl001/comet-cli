@@ -1,0 +1,12 @@
+package {{.Package}}
+
+type {{.Name}}Service interface {}
+
+type {{.LowerName}}Service struct {
+    {{.Name}}Service
+}
+
+func New{{.Name}}Service() {{.Name}}Service {
+    return &{{.LowerName}}Service{}
+}
+

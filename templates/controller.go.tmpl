@@ -1,0 +1,21 @@
+package {{.Package}}
+
+import (
+    "github.com/ramoncl001/comet/rest"
+)
+
+type {{.Name}}Controller struct {
+    rest.ControllerBase
+}
+
+func New{{.Name}}Controller() {{.Name}}Controller {
+    return {{.Name}}Controller{}
+}
+
+func ({{.Name}}Controller) Path() string {
+    return ""
+}
+
+func ({{.Name}}Controller) Policies() rest.PoliciesConfig {
+    return rest.PoliciesConfig{}
+}

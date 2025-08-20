@@ -1,0 +1,175 @@
+# Comet CLI
+
+A powerful command-line interface tool for creating and managing Comet Framework projects. Streamline your development workflow with automated project scaffolding and component generation.
+
+![Go Version](https://img.shields.io/badge/Go-1.18%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![CLI](https://img.shields.io/badge/Type-CLI-orange)
+
+## 📦 Installation
+
+### Prerequisites
+- Go 1.18 or higher
+- Git
+
+### Method 1: Install from source (Recommended)
+```bash
+go install github.com/ramoncl001/comet-cli@latest
+```
+
+### Method 2: Build from source
+```bash
+git clone https://github.com/ramoncl001/comet-cli.git
+cd comet-cli
+go build -o comet ./main.go
+sudo mv comet /usr/local/bin/
+```
+
+## 🚀 Quickstart
+```bash
+# Create a new Comet project
+comet new my-project module.name
+
+# Navigate to your project
+cd my-project
+
+# Add a controller
+comet add controller User controllers
+
+# Add a service
+comet add service User services
+
+# Add middleware
+comet add middleware Auth middlewares
+
+# Run your project
+comet run
+```
+
+## 📋 Commands
+`comet new [project-name] [module-name]`
+
+Creates a new Comet project with the specified name and Go module path.
+
+#### Arguments
+* `project-name`: The directory name for your new project
+* `module-name`: The Go module path (e.g., `github.com/username/project`)
+
+#### Example:
+```bash
+comet new awesome-api github.com/yourusername/awesome-api
+```
+
+`comet add [type] [name] [location]`
+
+Generates new components for your Comet project.
+
+#### Arguments
+* `type`: The type of component to create (`controller`, `service`, or `middleware`)
+* `name`: The name of the component (e.g., `User`)
+* `location`: The directory where the component should be created
+
+#### Examples:
+```bash
+# Create a controller in the controllers directory
+comet add controller User controllers
+
+# Create a service in the services directory
+comet add service User services
+
+# Create middleware in the middleware directory
+comet add middleware Auth middlewares
+
+# Create component in current directory
+comet add controller Health .
+```
+
+`comet run`
+
+Executes your Comet project using `go run .`
+
+#### Example
+
+```bash
+comet run
+```
+
+## 📁 Project Structure
+When you create a new project with `comet new`, it generates the following structure:
+
+```text
+your-project/
+├── main.go              # Application entry point
+├── go.mod              # Go module definition
+├── go.sum              # Go module checksums
+├── controllers/        # HTTP controllers directory
+├── services/           # Business services directory
+├── middleware/         # HTTP middlewares directory
+├── models/             # Data models (optional)
+├── config/             # Configuration files
+└── internal/           # Internal application code
+```
+
+## 🧩 Generated Components
+### Controllers
+
+Handle HTTP requests and responses. Generated with proper Comet Framework structure including:
+
+* Request handling
+
+* Response generation
+
+* Dependency injection support
+
+* Route registration
+
+### Services
+
+Business logic components with:
+
+* Dependency injection support
+
+* Interface implementation
+
+* Scoped lifecycle management
+
+### Middleware
+
+HTTP request processing middleware with:
+
+* Standard Comet middleware interface
+
+* Request/response interception
+
+* Error handling
+
+## 🔧 Requirements
+
+* #### Go 1.18 or higher
+
+* #### Comet Framework (automatically included as dependency)
+
+## 📝 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🐛 Troubleshooting
+### Common issues
+
+#### 1. Command not found
+```bash
+# Ensure Go bin directory is in your PATH
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+
+#### 2. Permission denied
+```bash
+# On Unix systems, you might need to make the binary executable
+chmod +x $(go env GOPATH)/bin/comet
+```
+
+#### 3. Dependency errors
+```bash
+# Clean module cache and rebuild
+go clean -modcache
+go mod tidy
+```

@@ -1,0 +1,21 @@
+package main
+
+import (
+    "github.com/ramoncl001/comet/ioc"
+    "github.com/ramoncl001/comet/api"
+    "github.com/ramoncl001/comet/middleware"
+    "{{.Module}}/controllers"
+    "{{.Module}}/services"
+)
+
+func main() {
+    app := api.CreateServer()
+
+    app.UseMiddleware(middleware.RequestLogging)
+
+    ioc.RegisterTransient[services.FooService](services.NewFooService)
+
+    app.MapController(controllers.NewFooController)
+
+    app.Run(":8080")
+}

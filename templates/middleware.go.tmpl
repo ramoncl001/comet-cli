@@ -1,0 +1,13 @@
+package {{.Package}}
+
+import (
+    "github.com/ramoncl001/comet/middleware"
+    "github.com/ramoncl001/comet/rest"
+)
+
+var {{.Name}}Middleware = func (next rest.RequestHandler) rest.RequestHandler {
+    return func(req *rest.Request) rest.Response {
+        //Content
+        return next(req)
+    }
+}
