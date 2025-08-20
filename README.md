@@ -43,7 +43,7 @@ comet-cli add service User services
 comet-cli add middleware Auth middlewares
 
 # Run your project
-comet-cli run
+go run .
 ```
 
 ## 📋 Commands
@@ -84,30 +84,24 @@ comet-cli add middleware Auth middlewares
 comet-cli add controller Health .
 ```
 
-`comet-cli run`
-
-Executes your Comet project using `go run .`
-
-#### Example
-
-```bash
-comet-cli run
-```
-
 ## 📁 Project Structure
 When you create a new project with `comet-cli new`, it generates the following structure:
 
 ```text
-your-project/
-├── main.go              # Application entry point
-├── go.mod              # Go module definition
-├── go.sum              # Go module checksums
-├── controllers/        # HTTP controllers directory
-├── services/           # Business services directory
-├── middleware/         # HTTP middlewares directory
-├── models/             # Data models (optional)
-├── config/             # Configuration files
-└── internal/           # Internal application code
+your-project
+├── go.mod
+├── go.sum
+├── infrastructure
+├── main.go
+├── middlewares
+│   └── your_middleware.go
+└── modules
+    └── foo
+        ├── controllers
+        │   └── foo_controller.go
+        ├── domain
+        └── services
+            └── foo_service.go
 ```
 
 ## 🧩 Generated Components

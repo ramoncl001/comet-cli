@@ -150,26 +150,8 @@ func main() {
 		},
 	}
 
-	var runCmd = &cobra.Command{
-		Use:   "run",
-		Short: "Run the selected comet project",
-		Args:  cobra.ExactArgs(0),
-		Run: func(_ *cobra.Command, args []string) {
-			cmd := exec.Command("go", "run", ".")
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-
-			output, err := cmd.CombinedOutput()
-			if err != nil {
-				fmt.Printf("Error running project: %s - %s", err.Error(), string(output))
-				os.Exit(1)
-			}
-		},
-	}
-
 	rootCmd.AddCommand(createCmd)
 	rootCmd.AddCommand(componentCmd)
-	rootCmd.AddCommand(runCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
