@@ -132,7 +132,7 @@ func main() {
 					os.Exit(1)
 				}
 			case "service":
-				if err := generator.CreateController(name, location); err != nil {
+				if err := generator.CreateService(name, location); err != nil {
 					fmt.Printf("Error creating component: %v\n", err)
 					os.Exit(1)
 				}
