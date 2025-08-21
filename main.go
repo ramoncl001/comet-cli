@@ -104,6 +104,16 @@ func main() {
 				return
 			}
 
+			tidyCmd := exec.CommandContext(ctx, "go", "mod", "tidy")
+			tidyCmd.Dir = projectName
+			tidyCmd.Stdout = os.Stdout
+			tidyCmd.Stderr = os.Stderr
+
+			if err := tidyCmd.Run(); err != nil {
+				fmt.Printf("failed to tidy module: %v\n", err)
+				return
+			}
+
 			fmt.Println("✅ Comet library installed successfully!")
 
 			fmt.Println("Project created successfully!")
