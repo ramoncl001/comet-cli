@@ -164,7 +164,7 @@ func CreateMiddleware(name, location string) error {
 		targetDir = wd
 	}
 
-	fileName := extractFileName(name, CONTROLLER)
+	fileName := extractFileName(name, MIDDLEWARE)
 	pack := extractPackageName(targetDir)
 
 	fmt.Printf("package: %s | file: %s\n", pack, fileName)
