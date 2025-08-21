@@ -144,7 +144,7 @@ func CreateService(name, location string) error {
 		FileName:  fileName,
 		Package:   pack,
 		Name:      name,
-		LowerName: strings.Replace(name, string(name[0]), string(name[0]), 1),
+		LowerName: strings.Replace(name, string(name[0]), strings.ToLower(string(name[0])), 1),
 	}
 
 	if err := processTemplate(serviceTemplate, filepath.Join(location, fileName), service); err != nil {
